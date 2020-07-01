@@ -1,0 +1,105 @@
+{% extends 'blog.html' %}
+{% block title%}
+	薛定谔的博客网
+{% endblock %}
+{% block extra %}
+<script src="http://cdn.highcharts.com.cn/highcharts/highcharts.js"></script>
+<!-- <div align='right'>
+	<a href="{% url 'login' %}" style="color: azure;font-size: large;">登录</a><br>
+	<a href="{% url 'register' %}" style="color: grey;font-size: large;">注册</a>
+	<a href="http://127.0.0.1:8000/admin/logout/" style="color: grey;font-size: large;">注销</a>
+</div> -->
+{% endblock %}
+{% block content %}
+<div class="main">
+	<h1>欢迎来到薛定谔的博客网</h1>
+	<p>今天是 {{ n|date:'Y年m月d日 H:i:s a ' }}<br/>客官随便坐</p>
+</div>
+
+	
+	<!-- 图表容器 DOM -->
+    <div id="container" style="width: 600px;height:400px;"></div>
+    <!-- 引入 highcharts.js -->
+    <script src="http://cdn.highcharts.com.cn/highcharts/highcharts.js"></script>
+    <div class="hot_data">
+		{# 今日热门 #}
+	<h3>今天热门点击</h3>
+		<ul>
+			{% for hot in today_hot %}
+				<li><a href="{% url 'blog_detail' hot.content_object.pk %}">{{ hot.content_object.title }}</a>({{ hot.read_num }})</li>
+		</ul>
+			{% empty %}
+				<li>今天暂时没有</li>
+			{% endfor %}
+	</div>	
+	<div class="hot_data">
+		<h3>七天热门</h3>
+		<ul>
+			{% for hot_blog in hot_blogs_for_weekday %}
+				<li><a href="{% url 'blog_detail' hot_blog.id %}">{{ hot_blog.title }}</a>{{ hot_blog.read_num_sum }}</li>
+		</ul>
+			{% empty %}
+			<li>暂时有bug，后期再改。</li>
+		{% endfor %}
+	</div>	
+    <script>
+    	// 图表配置
+        var options = {
+            chart: { type: 'line' },
+            title: { text: null },
+            xAxis: {
+                categories: {{ dates|safe }},
+                tickmarkPlacement: 'on',  // x 轴分类
+            },
+            yAxis: {
+                title: { text: null },
+                labels:{ enabled:false },
+                gridLineDashStyle: 'Dash',
+            },
+            series: [{                              // 数据列
+                name: '阅读量',                        // 数据列名
+                data: {{ read_nums }}                     // 数据
+            }],
+            plotOptions: {
+            	line:{
+            		dataLabels: {
+            			enabled: true
+            		}
+            	}
+            },
+            legends: { enabled: false },
+            credits: { enabled: false },
+        };
+        // 图表初始化函数
+        var chart = Highcharts.chart('container', options);
+    </script>
+	<style type="text/css">
+		a {
+			text-decoration: none;
+		}
+		div.main {
+			font-size: 222%;
+			text-align: center;
+			margin-top: 4em;
+			margin-bottom: 2em;
+			color: black;
+			
+		}
+
+		div {
+			color: aliceblue;
+		}
+		div#container {
+			margin: 0 auto;
+			height: 30em;
+			min-width: 30em;
+			max-width: 50em;
+
+		}
+		div.hot_data {
+			text-align: center;
+			margin-top: 2em;
+			color: black;
+		}
+	</style>
+{% endblock %}

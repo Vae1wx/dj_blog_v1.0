@@ -1,0 +1,33 @@
+{% extends 'blog.html' %}
+{% block title%}
+	登录
+{% endblock %}
+{% block extra %}
+
+{% endblock %}
+{% block content %}
+	<div class="containter">
+		<div class="col-xs-4 col-xs-offset-4">
+			<div class="pannel pannel-default">
+				<div class="pannel-heading">
+					<h3 class="pannel-title">登录</h3>
+				</div>
+				<div class="pannel-body">
+					<form action="" method="post">
+						{% csrf_token %}
+						{% for field in login_form %}
+							<label for="{{ field.id_for_label }}">{{ field.label }}</label>
+							{{ field }}
+							<p class="text-danger">{{ field.errors.as_text }}</p>
+						{% endfor %}
+						<button type="button" id="send_verification_code" class="btn btn-default"><a href="{% url 'forget_password' %}" style="color:black; text-decoration: none;">忘记密码</a></button>
+						<span class="pull-left text-danger">{{ login_form.non_field_errors }}</span>
+						<input type="submit" value="登录" class="btn btn-primary pull-right">
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+{% endblock %}

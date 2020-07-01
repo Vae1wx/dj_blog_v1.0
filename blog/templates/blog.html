@@ -1,0 +1,118 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+	<title>{% block title %}{% endblock %}</title>
+	{#  ————————————————————在线引用Bootstrap文件————————————————————  #}
+	<!-- <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css"> -->
+	<!-- <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script> -->
+	<!-- <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" /> -->
+	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+	{# ————————————————————在线引用Bootstrap文件———————————————————— #}
+
+
+	<!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+</head>
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+        	<div class="bgcolor">
+        	<font size="5">
+          <a class="navbar-brand" href="{% url 'home' %}">薛定谔's博客网站</a>	
+      		</font>
+      		<font size='3'>
+          <a class="navbar-brand" href="{% url 'blog_list' %}">博客列表</a>
+          	</font>
+
+            </div>
+
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+        	{% if not user.is_authenticated %}
+               <li><a href="{% url 'login' %}" style="color: azure;font-size: large;">登录</a></li>
+                <li><a href="{% url 'register' %}" style="color: grey;font-size: large;">注册</a></li>
+            {% else %}
+               <li class="dropdown">
+                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ user }}<span class="caret"></span></a>
+                 <ul class="dropdown-menu">
+                 	<li><a href="{% url 'user_info' %}">个人资料</a></li>
+                 	{% if user.is_straff or user.is_superuser %}
+                 		<li><a href="{% url 'admin:index' %}">后台管理</a></li>
+                 	{% endif %}
+                 	<li><a href="{% url 'logout' %}">退出登录</a></li>
+                  
+                   
+                 </ul>
+               </li>
+            {% endif %}
+             </ul>
+        {% block extra %}
+          	{% endblock %}
+        <div id="navbar" class="collapse navbar-collapse">
+          
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+	<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">	
+
+	
+</div>
+	<hr>
+		<style type="text/css">
+		*{
+			margin: 0; padding: 0;
+		}
+		body{
+		    background: #eee;
+		}
+		a.logo {
+			
+			text-decoration: none;
+			color: #000;
+			
+		}
+		a.navbar-brand {
+			text-decoration: none;
+			color: black;
+		}
+		div.logo {
+			display: inline-block;
+		}
+		div.paginator {
+			text-align: center;
+		}
+		div.django-ckeditor-widget {
+			width: 100%;
+		}
+		ul.navbar-right {
+			margin-right: 0;
+		}
+	</style>
+	{% block content %}{% endblock %}
+	{% block script_extends %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,44 @@
+{% extends 'blog.html' %}
+{% block title%}
+	薛定谔的博客网
+{% endblock %}
+{% block extra %}
+
+{% endblock %}
+{% block content %}
+<div class="main">
+	<h1>{{ message }}</h1>
+	<p>要不再试一次吧</p>
+	<a href="{{ redirect_to }}"><h4>好的</h4></a>
+</div>
+
+	<style type="text/css">
+		a {
+			text-decoration: none;
+		}
+		div.main {
+			font-size: 222%;
+			text-align: center;
+			margin-top: 4em;
+			margin-bottom: 2em;
+			color: black;
+			
+		}
+
+		div {
+			color: aliceblue;
+		}
+		div#container {
+			margin: 0 auto;
+			height: 30em;
+			min-width: 30em;
+			max-width: 50em;
+
+		}
+		div.hot_data {
+			text-align: center;
+			margin-top: 2em;
+			color: black;
+		}
+	</style>
+{% endblock %}

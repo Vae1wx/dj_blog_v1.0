@@ -1,0 +1,76 @@
+{% extends 'blog.html' %}
+{% block title%}
+	注册
+{% endblock %}
+{% block extra %}
+
+{% endblock %}
+{% block content %}
+	<div class="containter">
+		<div class="col-xs-4 col-xs-offset-4">
+			<div class="pannel pannel-default">
+				<div class="pannel-heading">
+					<h3 class="pannel-title">注册</h3>
+				</div>
+				<div class="pannel-body">
+					<form action="" method="post">
+						{% csrf_token %}
+						{% for field in reg_form %}
+							<label for="{{ field.id_for_label }}">{{ field.label }}</label>
+							{{ field }}
+							<p class="text-danger">{{ field.errors.as_text }}</p>
+						{% endfor %}
+						<span class="pull-left text-danger">{{ reg_form.non_field_errors }}</span>
+						<button type="button" id="send_verification_code" class="btn btn-default" >发送验证码到邮箱</button>
+						<input type="submit" value="注册" class="btn btn-primary pull-right">
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		$("#send_verification_code").click(function(){
+			
+			var email = $("#id_email").val();
+			if(email==''){
+				$("#tip").text('*邮箱不能为空');
+				return false;
+			}
+
+			// 发送验证码
+			$.ajax({
+				url: "{% url 'send_verification_code' %}",
+				type: "GET",
+				data: {
+					'email': email // 相关数据
+				},
+				cache: false,
+				success: function(data){
+					if(data['status']=='ERROR'){
+						alert(data['status']);
+					}
+					
+				}	
+
+			}),
+			// 把按钮变灰
+			$(this).addClass('disabled');
+			$(this).attr('disabled', true);
+			var time = 30;
+			$(this).text(time + 's');
+			var interval = setInterval(() => {
+				if(time <= 0){
+					clearInterval(interval);
+					$(this).removeClass('disabled');
+					$(this).attr('disabled', false);
+					$(this).text('发送验证码');
+					return false;
+				}
+				time --;
+				$(this).text(time + 's');
+			}, 1000);
+			
+		});
+	</script>
+
+{% endblock %}

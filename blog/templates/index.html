@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>hello</title>
+</head>
+<body background="{% static 'img/1.jpg' %}">
+<nav aria-label="Page navigation">
+  <ul class="pagination">
+    <li>
+      <a href="#" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+      <img src="{% static 'img/1.jpg' %}" alt="My ">
+		<img src="{% static 'img/1.jpg' %}">
+    </li>
+    <li><a href="#">1</a></li>
+    <li><a href="#">2</a></li>
+    <li><a href="#">3</a></li>
+    <li><a href="#">4</a></li>
+    <li><a href="#">5</a></li>
+    <li>
+      <a href="#" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+	<h1>{{ context }}</h1>
+	<h2>{{ h|default:"123" }}</h2>
+	<p>{{ views_list }}</p>
+	<p>{{ views_list.1 }}</p>
+	<p>{{ views_dict }}</p>
+	<p>{{ views_dict.name }}</p>
+	<p>{{ v|filesizeformat }}</p>
+	<p>{{ n }}</p>
+	<p>{{ n|date:'Y-m-d H:f:s' }}</p>
+	<p>{{ n|date:'y-M-D h:f:s' }}</p>
+	<p>{{ wb }}</p>
+	<p>{{ wb|safe }}</p>
+	<h1>{{ vl }}</h1>
+
+	<ul>
+		{% for i in vl  %}
+			<li>{{ i }}</li>
+		{% endfor %}
+	</ul>
+	<p>1</p>
+	<ul>
+		{% for i in vl reversed %}
+			<li>{{ i }}</li>
+			{{ forloop.counter }}
+		{% endfor %}
+	</ul>
+		<ul>
+		{% for i in vw %}
+			<li>{{ i }}</li>
+			{{ forloop.counter }}
+		 {% empty %}
+		 空的
+		 {# 仅仅是注释 #}
+		{% endfor %}
+	</ul>
+</body>
+</html>
